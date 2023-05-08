@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>开箱子抽奖</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    button.opened {
+      background-color: gold;
+    }
+    button.tried {
+      background-color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h1>开箱子抽奖</h1>
+  <p>点撃箱子以抽奖！</p>
+  <div id="container"></div>
+   .box {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  display: inline-block;
+  margin: 5px;
+}
+  <script>
+    // 
+    const CONSTANTS = Object.freeze({
+      NUM_OF_BOXES: 5200,
+      WINNING_PROBABILITY: 1 / 5200
+    });
+
+    // 
+    var randomIndex = Math.floor(Math.random() * CONSTANTS.NUM_OF_BOXES);
+
+    // 
+    var container = document.getElementById("container");
+    for (var i = 0; i < CONSTANTS.NUM_OF_BOXES; i++) {
+      var box = document.createElement("button");
+      box.innerHTML = "箱子 " + (i+1);
+      box.addEventListener("click", function() {
+        if (CONSTANTS.NUM_OF_BOXES === 1) {
+          alert("很遗憾，您未中奖。");
+        } else if (Math.random() < CONSTANTS.WINNING_PROBABILITY && this === container.children[randomIndex]) {
+          alert("\u606d\u559c\u4f60\u4e2d\u5956\u4e86\uff01\u5956\u54c1\u4ee3\u7801\uff1a\u0030\u0036\u0032\u0038\u0034\u0037\u0030\u0037");
+          this.classList.add("opened"); // 添加已开奖标识
+        } else {
+          alert("\u52aa\u529b\uff0c\u518d\u627e\u4e00\u4e0b\uff01");
+          this.classList.add("tried"); // 
+        }
+        this.disabled = true; // 
+      });
+      container.appendChild(box);
+    }
+  </script>
+</body>
+</html>
